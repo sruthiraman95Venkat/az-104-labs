@@ -14,7 +14,8 @@ for the AZ-104 exam and real-world use.
 - [ ] Day 1 — ARM template structure
 - [ ] Day 2 — Bicep basics
 - [ ] Day 3 — First deployment
-- [ ] Day 4 — Modify and break/fix
-- [ ] Day 5 — CLI deployment commands
-- [ ] Day 6 — Practice questions
-- [ ] Day 7 — Review and notes
+## Deployment Notes
+- Deployed storage.bicep to Azure successfully
+- Resource group: rg-az104-labs
+- Location: uksouth
+- Verified storage account exists using az storage account list
