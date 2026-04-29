@@ -1,6 +1,6 @@
 // Resource 1 - Storage Account
 resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
-  name: 'storagelifecycle${uniqueString(resourceGroup().id)}'
+  name: 'storagelc${uniqueString(resourceGroup().id)}'
   location: resourceGroup().location
   kind: 'StorageV2'
   sku: {
