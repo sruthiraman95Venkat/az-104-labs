@@ -1,6 +1,6 @@
 resource storageaccount 'Microsoft.Storage/storageAccounts@2021-02-01' = {
-  name: 'name'
-  location: location
+  name: 'storagelifecycle${uniqueString(resourceGroup().id)}'
+  location: resourceGroup().location
   kind: 'StorageV2'
   sku: {
     name: 'Premium_LRS'
@@ -11,7 +11,7 @@ resource storageaccount 'Microsoft.Storage/storageAccounts@2021-02-01' = {
       baseBlob: {
         tiertoCool: 'Tier to cool'
         daysAfterModificationGreaterThan: 30
-      } tierTOArchive: {
+      } tierToArchive: {
         daysAfterModificationGreaterThan: 90
       } tierToDelete: {
         daysAfterModificationGreaterThan: 365
