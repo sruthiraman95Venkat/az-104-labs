@@ -1,22 +1,47 @@
-resource storageaccount 'Microsoft.Storage/storageAccounts@2021-02-01' = {
+// Resource 1 - Storage Account
+resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   name: 'storagelifecycle${uniqueString(resourceGroup().id)}'
   location: resourceGroup().location
   kind: 'StorageV2'
   sku: {
-    name: 'Premium_LRS'
+    name: 'Standard_LRS'
   }
   properties: {
     accessTier: 'Hot'
-    actions: {
-      baseBlob: {
-        tiertoCool: 'Tier to cool'
-        daysAfterModificationGreaterThan: 30
-      } tierToArchive: {
-        daysAfterModificationGreaterThan: 90
-      } tierToDelete: {
-        daysAfterModificationGreaterThan: 365
-      }
-    }
-
   }
 }
+
+// Resource 2 - Lifecycle Policy (separate resource)
+resource lifecyclePolicy 'Microsoft.Storage/storageAccounts/managementPolicies@2023-01-01' = {
+  parent: storageAccount
+  name: 'default'
+  properties: {
+    policy: {
+      rules: [
+        {
+          name: 'lifecyclerule'
+          type: 'Lifecycle'
+          definition: {
+            actions: {
+              baseBlob: {
+                tierToCool: {
+                  daysAfterModificationGreaterThan: 30
+                }
+                tierToArchive: {
+                  daysAfterModificationGreaterThan: 90
+                }
+                delete: {
+                  daysAfterModificationGreaterThan: 365
+                }
+              }
+            }
+            filters: {
+              blobTypes: ['blockBlob']
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+
