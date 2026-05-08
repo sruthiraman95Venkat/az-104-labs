@@ -18,7 +18,7 @@ resource windowsVM 'Microsoft.Compute/virtualMachines@2020-12-01' = {
         version: 'latest'
       }
       osDisk: {
-        name: '[$vmName]-osdisk'
+        name: '${vmName}-osdisk'
         caching: 'ReadWrite'
         createOption: 'FromImage'
       }
@@ -29,8 +29,6 @@ resource windowsVM 'Microsoft.Compute/virtualMachines@2020-12-01' = {
           id: networkInterface.id
         }
       ]
-    }
-      }
     }
   }
 }
